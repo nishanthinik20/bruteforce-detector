@@ -38,3 +38,5 @@ logs/
 
 # Render / Vercel
 .vercel/
+# Database
+*.db
