@@ -3,7 +3,7 @@ import axios from "axios";
 // Backend URL
 // Local la running-a irundha 127.0.0.1:8000
 // Cloud la deploy aana aprom, adhu URL podunga (https://your-app.onrender.com)
-const API_URL = "http://127.0.0.1:8000";
+const API_URL = import.meta.env.VITE_API_URL || "https://bruteforce-detector-api.onrender.com";
 
 const api = axios.create({
   baseURL: API_URL,
