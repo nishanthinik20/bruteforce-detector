@@ -27,6 +27,5 @@ A real-time brute-force attack detection and auto-ban system with live dashboard
 - API Docs: TBD
 
 ## Author
-- Name: <Your Name>
-- Roll No: <Your Roll No>
+- Name: NISHANTHINI K
 - Course: Level 5 Cybersecurity
