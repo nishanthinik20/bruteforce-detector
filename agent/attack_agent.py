@@ -15,7 +15,7 @@ import sys
 # ============ CONFIG ============
 # Backend URL - local la running-a irundha 127.0.0.1:8000
 # Cloud la deploy aana aprom, adhu URL podunga (https://your-app.onrender.com)
-BACKEND_URL = "http://127.0.0.1:8000"
+BACKEND_URL = "https://bruteforce-detector-api.onrender.com"
 
 # Agent API Key - .env la irukkura value
 AGENT_API_KEY = "agent-secret-key-change-me"
