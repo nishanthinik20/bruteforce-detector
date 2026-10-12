@@ -48,7 +48,8 @@ function Login() {
       <div style={styles.card}>
         {/* Header */}
         <div style={styles.header}>
-          <h1 style={styles.title}>⬢ SECURITY PORTAL</h1>
+          <h1 style={styles.title}>⬢ BRUTE-FORCE ATTACK</h1>
+<h2 style={styles.title2}>DETECTION SYSTEM</h2>
           <p style={styles.subtitle}>// AUTHORIZED ACCESS ONLY</p>
         </div>
 
@@ -242,6 +243,15 @@ const styles = {
     letterSpacing: "3px",
     animation: "glow-cyan 3s infinite",
   },
+title2: {
+  margin: "4px 0 0 0",
+  fontSize: "20px",
+  color: "#00d4ff",
+  fontFamily: "'Orbitron', sans-serif",
+  fontWeight: 900,
+  letterSpacing: "4px",
+  animation: "glow-cyan 3s infinite",
+},
   subtitle: {
     margin: "8px 0 0 0",
     color: "#64748b",
