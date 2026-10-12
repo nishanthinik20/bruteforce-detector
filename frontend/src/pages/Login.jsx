@@ -21,7 +21,7 @@ function Login() {
       setMessage(data.message);
       setStatus(data.success ? "success" : data.blocked ? "blocked" : "error");
     } catch (err) {
-      setMessage("Error: " + err.message);
+      setMessage("Connection Error: " + err.message);
       setStatus("error");
     } finally {
       setLoading(false);
@@ -30,51 +30,105 @@ function Login() {
 
   return (
     <div style={styles.container}>
+      {/* Scan line animation */}
+      <div style={styles.scanline}></div>
+
+      {/* Cyber grid background */}
+      <div style={styles.grid}></div>
+
+      {/* Status bar - top */}
+      <div style={styles.statusBar}>
+        <span style={styles.statusItem}>
+          <span style={styles.dot}></span> SYSTEM: ONLINE
+        </span>
+        <span style={styles.statusItem}>ENCRYPTION: AES-256</span>
+        <span style={styles.statusItem}>UPTIME: 99.9%</span>
+      </div>
+
       <div style={styles.card}>
-        <h1 style={styles.title}>🔐 Secure Login</h1>
-        <p style={styles.subtitle}>Brute-Force Detection Test Target</p>
+        {/* Header */}
+        <div style={styles.header}>
+          <h1 style={styles.title}>⬢ SECURITY PORTAL</h1>
+          <p style={styles.subtitle}>// AUTHORIZED ACCESS ONLY</p>
+        </div>
+
+        {/* Terminal prompt */}
+        <div style={styles.terminal}>
+          <span style={styles.prompt}>&gt;</span> AUTHENTICATION REQUIRED
+        </div>
 
         <form onSubmit={handleSubmit} style={styles.form}>
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            style={styles.input}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={styles.input}
-            required
-          />
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>&gt; USERNAME</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              style={styles.input}
+              placeholder="enter username"
+              required
+            />
+          </div>
+
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>&gt; PASSWORD</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={styles.input}
+              placeholder="enter password"
+              required
+            />
+          </div>
+
           <button type="submit" disabled={loading} style={styles.button}>
-            {loading ? "Trying..." : "Login"}
+            {loading ? "[ AUTHENTICATING... ]" : "[ ▶ EXECUTE LOGIN ]"}
           </button>
         </form>
 
+        {/* Response message */}
         {message && (
-          <div style={{
-            ...styles.message,
-            background: status === "success" ? "#d4edda" :
-                        status === "blocked" ? "#f8d7da" : "#fff3cd",
-            color: status === "success" ? "#155724" :
-                   status === "blocked" ? "#721c24" : "#856404",
-          }}>
-            {message}
+          <div
+            style={{
+              ...styles.message,
+              borderLeft:
+                status === "success"
+                  ? "4px solid #00ff88"
+                  : status === "blocked"
+                  ? "4px solid #ff3366"
+                  : "4px solid #ffaa00",
+              color:
+                status === "success"
+                  ? "#00ff88"
+                  : status === "blocked"
+                  ? "#ff3366"
+                  : "#ffaa00",
+            }}
+          >
+            <span style={styles.prompt}>&gt;</span> {message}
           </div>
         )}
 
-        <p style={styles.hint}>
-          💡 Try wrong password 5 times → IP will be banned!
-        </p>
+        {/* Hints */}
+        <div style={styles.hints}>
+          <span style={styles.hint}>&gt; 5 wrong attempts → IP BANNED</span>
+          <span style={styles.hint}>&gt; MONITORED BY SECURITY TEAM</span>
+        </div>
 
+        {/* Dashboard link */}
         <button onClick={() => navigate("/dashboard")} style={styles.linkBtn}>
-          → Go to Dashboard
+          [ → ACCESS DASHBOARD ]
         </button>
+      </div>
+
+      {/* Status bar - bottom */}
+      <div style={styles.statusBarBottom}>
+        <span style={styles.statusItem}>
+          <span style={styles.dotGreen}></span> THREAT LEVEL: LOW
+        </span>
+        <span style={styles.statusItem}>FIREWALL: ACTIVE</span>
+        <span style={styles.statusItem}>SESSION: SECURE</span>
       </div>
     </div>
   );
@@ -86,76 +140,203 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    background: "linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)",
-    fontFamily: "system-ui, -apple-system, sans-serif",
     padding: "20px",
+    position: "relative",
+    overflow: "hidden",
+  },
+  scanline: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: "2px",
+    background: "linear-gradient(90deg, transparent, #00d4ff, transparent)",
+    animation: "scanline 8s linear infinite",
+    opacity: 0.3,
+    pointerEvents: "none",
+  },
+  grid: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundImage:
+      "linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px)",
+    backgroundSize: "50px 50px",
+    pointerEvents: "none",
+  },
+  statusBar: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    padding: "8px 20px",
+    background: "rgba(10, 14, 26, 0.9)",
+    borderBottom: "1px solid #00d4ff40",
+    display: "flex",
+    justifyContent: "space-between",
+    fontSize: "11px",
+    color: "#00d4ff",
+    fontFamily: "'JetBrains Mono', monospace",
+    letterSpacing: "1px",
+  },
+  statusBarBottom: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: "8px 20px",
+    background: "rgba(10, 14, 26, 0.9)",
+    borderTop: "1px solid #00d4ff40",
+    display: "flex",
+    justifyContent: "space-between",
+    fontSize: "11px",
+    color: "#00d4ff",
+    fontFamily: "'JetBrains Mono', monospace",
+    letterSpacing: "1px",
+  },
+  statusItem: {
+    display: "flex",
+    alignItems: "center",
+    gap: "6px",
+  },
+  dot: {
+    width: "6px",
+    height: "6px",
+    borderRadius: "50%",
+    background: "#00ff88",
+    boxShadow: "0 0 8px #00ff88",
+    animation: "blink 1.5s infinite",
+  },
+  dotGreen: {
+    width: "6px",
+    height: "6px",
+    borderRadius: "50%",
+    background: "#00ff88",
+    boxShadow: "0 0 8px #00ff88",
   },
   card: {
-    background: "white",
+    background: "rgba(15, 23, 42, 0.95)",
+    border: "1px solid #00d4ff40",
+    borderRadius: "4px",
     padding: "40px",
-    borderRadius: "12px",
-    boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
     width: "100%",
-    maxWidth: "400px",
+    maxWidth: "440px",
+    boxShadow:
+      "0 0 40px rgba(0, 212, 255, 0.15), inset 0 0 60px rgba(0, 212, 255, 0.03)",
+    position: "relative",
+    zIndex: 2,
+    backdropFilter: "blur(10px)",
+  },
+  header: {
+    textAlign: "center",
+    marginBottom: "24px",
   },
   title: {
-    margin: "0 0 8px 0",
-    textAlign: "center",
-    color: "#1e3c72",
-    fontSize: "28px",
+    margin: 0,
+    fontSize: "26px",
+    color: "#00d4ff",
+    fontFamily: "'Orbitron', sans-serif",
+    fontWeight: 900,
+    letterSpacing: "3px",
+    animation: "glow-cyan 3s infinite",
   },
   subtitle: {
-    textAlign: "center",
-    color: "#666",
-    marginBottom: "24px",
-    fontSize: "14px",
+    margin: "8px 0 0 0",
+    color: "#64748b",
+    fontSize: "12px",
+    letterSpacing: "2px",
+  },
+  terminal: {
+    padding: "10px 14px",
+    background: "rgba(0, 212, 255, 0.05)",
+    border: "1px solid #00d4ff30",
+    borderRadius: "3px",
+    fontSize: "12px",
+    color: "#00d4ff",
+    marginBottom: "20px",
+    letterSpacing: "1px",
+  },
+  prompt: {
+    color: "#00ff88",
+    marginRight: "8px",
+    fontWeight: "bold",
   },
   form: {
     display: "flex",
     flexDirection: "column",
-    gap: "12px",
+    gap: "16px",
+  },
+  inputGroup: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "6px",
+  },
+  label: {
+    fontSize: "11px",
+    color: "#00d4ff",
+    letterSpacing: "2px",
+    fontWeight: "bold",
   },
   input: {
-    padding: "12px 16px",
-    fontSize: "16px",
-    border: "2px solid #ddd",
-    borderRadius: "8px",
+    padding: "12px 14px",
+    fontSize: "14px",
+    background: "rgba(10, 14, 26, 0.8)",
+    border: "1px solid #00d4ff40",
+    borderRadius: "3px",
+    color: "#e2e8f0",
     outline: "none",
+    fontFamily: "'JetBrains Mono', monospace",
+    transition: "all 0.2s",
   },
   button: {
-    padding: "12px",
-    fontSize: "16px",
+    padding: "14px",
+    fontSize: "14px",
     fontWeight: "bold",
-    background: "#1e3c72",
-    color: "white",
+    background: "linear-gradient(135deg, #00d4ff 0%, #0099cc 100%)",
+    color: "#0a0e1a",
     border: "none",
-    borderRadius: "8px",
+    borderRadius: "3px",
     cursor: "pointer",
+    fontFamily: "'Orbitron', sans-serif",
+    letterSpacing: "2px",
+    marginTop: "8px",
+    boxShadow: "0 0 20px rgba(0, 212, 255, 0.4)",
   },
   message: {
     marginTop: "16px",
-    padding: "12px",
-    borderRadius: "8px",
-    fontSize: "14px",
-    textAlign: "center",
+    padding: "12px 14px",
+    background: "rgba(10, 14, 26, 0.8)",
+    borderRadius: "3px",
+    fontSize: "13px",
+    fontFamily: "'JetBrains Mono', monospace",
+  },
+  hints: {
+    marginTop: "20px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "4px",
+    fontSize: "10px",
+    color: "#64748b",
+    letterSpacing: "1px",
   },
   hint: {
-    marginTop: "20px",
-    textAlign: "center",
-    color: "#666",
-    fontSize: "12px",
+    color: "#64748b",
   },
   linkBtn: {
     marginTop: "16px",
     padding: "10px",
     width: "100%",
     background: "transparent",
-    border: "2px solid #1e3c72",
-    color: "#1e3c72",
-    borderRadius: "8px",
+    border: "1px solid #00d4ff",
+    color: "#00d4ff",
+    borderRadius: "3px",
     cursor: "pointer",
-    fontSize: "14px",
+    fontSize: "12px",
     fontWeight: "600",
+    fontFamily: "'JetBrains Mono', monospace",
+    letterSpacing: "2px",
   },
 };
 
